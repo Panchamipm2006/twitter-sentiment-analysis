@@ -1,32 +1,48 @@
+# 🐦 AI-Powered Twitter Sentiment Analysis
 
-# Twitter Sentiment Analysis
+An end-to-end Natural Language Processing (NLP) and Machine Learning project that classifies text into **Negative, Neutral, or Positive** sentiment using **TF-IDF** and **Logistic Regression**.
 
-A browser-based sentiment analysis tool built from the verified NLTK + TF-IDF + Logistic Regression pipeline.
+The project includes a professional interactive web dashboard deployed using **GitHub Pages**, allowing users to enter text and receive a sentiment prediction with model confidence and probability distribution.
 
-## Problem statement
+## 🚀 Live Demo
 
-Build a sentiment analysis tool to classify tweets as **Positive, Negative, or Neutral** using Natural Language Processing libraries such as NLTK or spaCy.
+👉 **[Open the Live Sentiment Analysis Dashboard](https://panchamipm2006.github.io/twitter-sentiment-analysis/)**
 
-## Implementation
+## 📂 GitHub Repository
 
-- Twitter sentiment dataset
-- NLTK text preprocessing
-- TF-IDF feature extraction
-- Logistic Regression classifier
-- Negative / Neutral / Positive classes
-- Interactive browser dashboard
-- GitHub Pages deployment
-- No Python server required for the deployed application
+👉 **[View the Source Code](https://github.com/Panchamipm2006/twitter-sentiment-analysis)**
 
-## Model performance
+---
 
-- Accuracy: 75.00%
-- Weighted Precision: 76.70%
-- Weighted Recall: 75.00%
-- Weighted F1 Score: 73.78%
+## 🎯 Project Objective
 
-## Deployment
+The objective of this project is to build a machine learning system capable of automatically identifying the sentiment expressed in short text.
 
-Publish `index.html` with GitHub Pages.
+The model classifies input into three categories:
 
-The model parameters are embedded in the page so the browser can perform prediction without a Python backend.
+- 🔴 **Negative**
+- 🟡 **Neutral**
+- 🟢 **Positive**
+
+This type of system can be useful for understanding customer opinions, product feedback, social media discussions, and public reactions.
+
+---
+
+## 🧠 How the AI Works
+
+The project follows a complete NLP and Machine Learning pipeline:
+
+```text
+User Input
+    ↓
+Text Preprocessing
+    ↓
+TF-IDF Vectorization
+    ↓
+Trained Logistic Regression Model
+    ↓
+Sentiment Prediction
+    ↓
+Prediction Probability
+    ↓
+Dashboard Result
