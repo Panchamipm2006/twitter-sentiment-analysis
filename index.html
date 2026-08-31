@@ -8,12 +8,13 @@
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
+            --border-color: #334155;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent-pos: #22c55e;
-            --accent-neg: #ef4444;
-            --accent-neu: #3b82f6;
-            --border: #334155;
+            --accent-blue: #38bdf8;
+            --positive-color: #22c55e;
+            --negative-color: #ef4444;
+            --neutral-color: #eab308;
         }
 
         * {
@@ -43,67 +44,78 @@
 
         @media (min-width: 768px) {
             .container {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.2fr 0.8fr;
             }
         }
 
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border);
+            border: 1fr solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+        .header {
+            margin-bottom: 20px;
         }
 
-        p.subtitle {
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .header p {
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         textarea {
             width: 100%;
             height: 120px;
             background-color: #0f172a;
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 12px;
             color: var(--text-main);
-            font-size: 1rem;
+            font-size: 0.95rem;
             resize: none;
-            margin-bottom: 8px;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
         textarea:focus {
-            outline: none;
-            border-color: var(--accent-neu);
+            border-color: var(--accent-blue);
         }
 
-        .input-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
+        .char-counter {
+            text-align: right;
             font-size: 0.8rem;
-            margin-bottom: 20px;
+            color: var(--text-muted);
         }
 
-        .btn-group {
+        .button-group {
             display: flex;
             gap: 10px;
+            margin-bottom: 24px;
         }
 
         button {
             flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
+            border: none;
             transition: opacity 0.2s;
         }
 
@@ -112,20 +124,47 @@
         }
 
         .btn-primary {
-            background-color: var(--accent-neu);
-            color: white;
+            background-color: var(--accent-blue);
+            color: #0f172a;
         }
 
         .btn-secondary {
             background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .metric-card {
+            background-color: rgba(15, 23, 42, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-blue);
         }
 
         /* Results Display */
         .ready {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 10px;
             color: var(--text-muted);
         }
 
@@ -134,30 +173,27 @@
             margin-bottom: 10px;
         }
 
+        .result-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
         .result-main {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 20px;
-            padding: 16px;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.03);
         }
 
         .result-icon {
             font-size: 2.5rem;
         }
 
-        .result-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
         .result-name {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 700;
         }
 
@@ -166,15 +202,15 @@
             color: var(--text-muted);
         }
 
-        .positive .result-name { color: var(--accent-pos); }
-        .negative .result-name { color: var(--accent-neg); }
-        .neutral .result-name { color: var(--accent-neu); }
+        .positive .result-name { color: var(--positive-color); }
+        .negative .result-name { color: var(--negative-color); }
+        .neutral .result-name { color: var(--neutral-color); }
 
         .confidence {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .confidence-head, .prob-head {
+        .confidence-head {
             display: flex;
             justify-content: space-between;
             font-size: 0.85rem;
@@ -190,99 +226,78 @@
 
         .fill {
             height: 100%;
-            transition: width 0.4s ease;
+            border-radius: 4px;
+            transition: width 0.3s ease;
         }
 
-        .positive-fill { background-color: var(--accent-pos); }
-        .negative-fill { background-color: var(--accent-neg); }
-        .neutral-fill { background-color: var(--accent-neu); }
+        .positive-fill { background-color: var(--positive-color); }
+        .negative-fill { background-color: var(--negative-color); }
+        .neutral-fill { background-color: var(--neutral-color); }
 
         .prob-title {
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 12px;
             color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
         .prob-row {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        /* Performance Footer */
-        .metrics {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            text-align: center;
-        }
-
-        .metric-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .metric-val {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-neu);
-        }
-
-        .metric-lbl {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        .prob-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Input Panel -->
+    <!-- Input Section -->
     <div class="card">
-        <h1>Sentiment Analyzer</h1>
-        <p class="subtitle">Classify tweet sentiment into Positive, Negative, or Neutral.</p>
-        
-        <textarea id="tweetInput" placeholder="Type or paste a tweet here..."></textarea>
-        <div class="input-meta">
-            <span>Characters: <span id="charCount">0</span></span>
+        <div class="header">
+            <h1>Tweet Sentiment Analyzer</h1>
+            <p>Classify text sentiment into Positive, Negative, or Neutral.</p>
         </div>
 
-        <div class="btn-group">
+        <div class="input-group">
+            <textarea id="tweetInput" placeholder="Type or paste a tweet here..."></textarea>
+            <div class="char-counter"><span id="charCount">0</span> characters</div>
+        </div>
+
+        <div class="button-group">
             <button class="btn-primary" onclick="analyzeTweet()">Analyze Sentiment</button>
             <button class="btn-secondary" onclick="clearDashboard()">Clear</button>
         </div>
-    </div>
 
-    <!-- Results Panel -->
-    <div class="card">
-        <div id="result">
-            <div class="ready">
-                <div class="ready-icon">✦</div>
-                <strong>Ready to analyze</strong>
-                <div style="margin-top:7px;">Enter a tweet to see the predicted sentiment.</div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Accuracy</div>
+                <div class="metric-value" id="accuracyMetric">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Precision</div>
+                <div class="metric-value" id="precisionMetric">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Recall</div>
+                <div class="metric-value" id="recallMetric">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">F1 Score</div>
+                <div class="metric-value" id="f1Metric">--</div>
             </div>
         </div>
     </div>
 
-    <!-- Model Metrics Footer -->
-    <div class="metrics">
-        <div class="metric-card">
-            <div class="metric-val" id="accuracyMetric">--</div>
-            <div class="metric-lbl">Accuracy</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-val" id="precisionMetric">--</div>
-            <div class="metric-lbl">Precision</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-val" id="recallMetric">--</div>
-            <div class="metric-lbl">Recall</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-val" id="f1Metric">--</div>
-            <div class="metric-lbl">F1 Score</div>
+    <!-- Output Section -->
+    <div class="card" id="result">
+        <div class="ready">
+            <div class="ready-icon">✦</div>
+            <strong>Ready to analyze</strong>
+            <div style="margin-top:7px;">Enter a tweet to see the predicted sentiment.</div>
         </div>
     </div>
 </div>
@@ -328,47 +343,45 @@ function analyzeTweet() {
     
     let posScore = 0;
     let negScore = 0;
-    let neutralScore = 0;
 
-    // Evaluate vocabulary matches
+    // Count score based on sentiment dictionaries
     words.forEach(word => {
         if (POSITIVE_WORDS.includes(word)) {
             posScore += 2;
         } else if (NEGATIVE_WORDS.includes(word)) {
             negScore += 2;
-        } else {
-            neutralScore += 1;
         }
     });
 
     let predictedClass = "neutral";
-    let posProb = 0.33;
-    let negProb = 0.33;
-    let neuProb = 0.34;
+    let posProb = 0.15;
+    let negProb = 0.15;
+    let neuProb = 0.70;
 
-    const totalScore = posScore + negScore + (neutralScore * 0.5) || 1;
-
-    // Decision Logic
+    // STRICT SENTIMENT RULES
     if (posScore > negScore && posScore >= 2) {
         predictedClass = "positive";
-        posProb = Math.min(0.92, 0.50 + (posScore / (totalScore + 1)));
-        negProb = Math.max(0.03, (1 - posProb) * 0.2);
-        neuProb = 1 - posProb - negProb;
-    } else if (negScore > posScore && negScore >= 2) {
+        posProb = Math.min(0.92, 0.60 + (posScore * 0.08));
+        negProb = 0.05;
+        neuProb = Number((1 - posProb - negProb).toFixed(2));
+    } 
+    else if (negScore > posScore && negScore >= 2) {
         predictedClass = "negative";
-        negProb = Math.min(0.92, 0.50 + (negScore / (totalScore + 1)));
-        posProb = Math.max(0.03, (1 - negProb) * 0.2);
-        neuProb = 1 - negProb - posProb;
-    } else {
+        negProb = Math.min(0.92, 0.60 + (negScore * 0.08));
+        posProb = 0.05;
+        neuProb = Number((1 - negProb - posProb).toFixed(2));
+    } 
+    else {
+        // Strict fallback to Neutral when no explicit positive/negative words exist
         predictedClass = "neutral";
-        neuProb = Math.min(0.90, 0.65 + (neutralScore * 0.03));
-        posProb = (1 - neuProb) / 2;
-        negProb = (1 - neuProb) / 2;
+        neuProb = 0.82;
+        posProb = 0.09;
+        negProb = 0.09;
     }
 
     const confidence = Math.round(Math.max(posProb, negProb, neuProb) * 100);
 
-    // Render updated output
+    // Update Result UI
     renderResult(predictedClass, confidence, posProb, negProb, neuProb);
 }
 
