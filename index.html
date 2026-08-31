@@ -412,7 +412,7 @@
             <div class="samples-title">Try Quick Samples</div>
             <div class="sample-chips">
                 <div class="chip" onclick="applySample('Just got the new phone and it is absolutely amazing! Best purchase ever. 🎉')">Positive</div>
-                <div class="chip" onclick="applySample('Flight got delayed for 4 hours and the service is terrible. 😡')">Negative</div>
+                <div class="chip" onclick="applySample('The product arrived broken and felt cheap and flimsy.')">Negative</div>
                 <div class="chip" onclick="applySample('The conference starts at 10 AM tomorrow in Room 4B.')">Neutral</div>
             </div>
 
@@ -458,8 +458,23 @@
 </div>
 
 <script>
-const POSITIVE_WORDS = ["great", "love", "awesome", "excited", "best", "good", "nice", "fantastic", "thanks", "lovin", "cool", "yay", "enjoyable", "happy", "wonderful", "amazing", "purchase"];
-const NEGATIVE_WORDS = ["sucks", "hate", "terrible", "bad", "worst", "sick", "fuck", "fucking", "shit", "delayed", "broke", "expensive", "disappointed", "crashing", "fail", "hideous", "bummer", "slow", "angry"];
+/* Comprehensive Sentiment Lexicon */
+const POSITIVE_WORDS = [
+    "great", "love", "awesome", "excited", "best", "good", "nice", "fantastic", "thanks", 
+    "lovin", "cool", "yay", "enjoyable", "happy", "wonderful", "amazing", "purchase", 
+    "outstanding", "excellent", "brilliant", "perfect", "superb", "terrific", "glad", 
+    "pleased", "delighted", "loved", "impressive", "recommend", "fabulous", "flawless", 
+    "smooth", "prompt", "fast", "helpful", "friendly", "beautiful", "solid", "satisfying"
+];
+
+const NEGATIVE_WORDS = [
+    "sucks", "hate", "terrible", "bad", "worst", "sick", "fuck", "fucking", "shit", 
+    "delayed", "broke", "broken", "expensive", "cheap", "flimsy", "disappointed", 
+    "crashing", "crash", "crashed", "fail", "failed", "failing", "hideous", "bummer", 
+    "slow", "angry", "poor", "horrible", "awful", "useless", "junk", "damaged", "defective", 
+    "rude", "unhelpful", "missing", "waste", "stuck", "cancelled", "cancel", "decline", 
+    "declined", "unacceptable", "nightmare", "frustrated", "annoying", "annoyed", "pain"
+];
 
 const tweetInput = document.getElementById("tweetInput");
 const charCount = document.getElementById("charCount");
@@ -494,32 +509,41 @@ function analyzeTweet() {
     let negScore = 0;
 
     words.forEach(word => {
-        if (POSITIVE_WORDS.includes(word)) posScore += 2;
-        else if (NEGATIVE_WORDS.includes(word)) negScore += 2;
+        // Direct word matching
+        if (POSITIVE_WORDS.includes(word)) {
+            posScore += 2;
+        } else if (NEGATIVE_WORDS.includes(word)) {
+            negScore += 2;
+        } 
+        // Substring & Stemming Fallback Match
+        else {
+            if (POSITIVE_WORDS.some(p => word.length > 3 && word.includes(p))) posScore += 1;
+            if (NEGATIVE_WORDS.some(n => word.length > 3 && word.includes(n))) negScore += 1;
+        }
     });
 
     let predictedClass = "neutral";
-    let posProb = 0.15;
-    let negProb = 0.15;
-    let neuProb = 0.70;
+    let posProb = 0.10;
+    let negProb = 0.10;
+    let neuProb = 0.80;
 
-    if (posScore > negScore && posScore >= 2) {
+    if (posScore > negScore && posScore >= 1) {
         predictedClass = "positive";
-        posProb = Math.min(0.92, 0.60 + (posScore * 0.08));
-        negProb = 0.05;
+        posProb = Math.min(0.96, 0.65 + (posScore * 0.08));
+        negProb = 0.04;
         neuProb = Number((1 - posProb - negProb).toFixed(2));
     } 
-    else if (negScore > posScore && negScore >= 2) {
+    else if (negScore > posScore && negScore >= 1) {
         predictedClass = "negative";
-        negProb = Math.min(0.92, 0.60 + (negScore * 0.08));
-        posProb = 0.05;
+        negProb = Math.min(0.96, 0.65 + (negScore * 0.08));
+        posProb = 0.04;
         neuProb = Number((1 - negProb - posProb).toFixed(2));
     } 
     else {
         predictedClass = "neutral";
-        neuProb = 0.82;
-        posProb = 0.09;
-        negProb = 0.09;
+        neuProb = 0.85;
+        posProb = 0.075;
+        negProb = 0.075;
     }
 
     const confidence = Math.round(Math.max(posProb, negProb, neuProb) * 100);
